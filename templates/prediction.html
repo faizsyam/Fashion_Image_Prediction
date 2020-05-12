@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% block title %}Upload Image{% endblock %}
+        {% block body %}
+        <div class="container pt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 mt-3">
+                    <h3>Fashion Products Image Prediction</h3>
+
+                    <form action="/" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="imageURL">Enter URL</label>
+                            <input type="text" name="imageURL" class="form-control" id="imageURL" placeholder="Enter URL">
+                        </div>
+                        <div class="form-group">
+                            <label>Select image</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="image" id="image">
+                                <label class="custom-file-label" for="image">Select image..</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-4">Predict!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endblock body %}
+    </body>
+</html>
