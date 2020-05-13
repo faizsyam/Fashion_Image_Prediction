@@ -1,0 +1,41 @@
+.bg-image {
+    background: url('/static/bg.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+body {
+    background-color: lightblue;
+}
+@font-face {
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+}
+h1, h2, h3, h4{
+    font-weight: bolder;
+    font-family: 'Gilroy';
+}
+p {
+    font-weight: lighter;
+    font-family: 'Gilroy';
+}
+.white-box{
+    background-color: white;
+    width: 300px;
+    padding: 50px;
+    margin: 20px;
+}
+div.ex3 {
+    width: 650px;
+    height: 350px;
+    overflow: auto;
+}
+.scrollable_small {
+    height : 400px;
+    overflow-y : scroll;
+}
+.scrollable_big {
+    height : 700px;
+    overflow-y : scroll;
+}

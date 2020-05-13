@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, redirect, Response, url_for
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 # from flask_dropzone import Dropzone
-from prediction import predict_by_url, init
+from prediction import predict_by_url, init, show_proba_plot, df
+from plot import get_bar_plots
 from werkzeug import secure_filename
+import pandas as pd
 import os
 import io
 import random
 import cv2
+from PIL import Image
 
 UPLOAD_FOLDER = '/Purwadhika/FINAL PROJECT/dashboard/static'
 
@@ -17,6 +20,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 global model
 model = init()
+
+def get_proba_plots(proba):
+    return [show_proba_plot('masterCategory',proba),
+    show_proba_plot('subCategory',proba),
+    show_proba_plot('articleType',proba),
+    show_proba_plot('gender',proba)]
 
 @app.route('/', methods=['GET','POST'])
 def index_prediction():
@@ -30,19 +39,23 @@ def index_prediction():
                 if not hasil:
                     return render_template('prediction.html',imageInfo='Image not found or filetype not supported.')
                 else:            
-                    probas = [str(round(hasil[i],2)) for i in range(4,8)]
-                    print(probas)
-                    return render_template('result.html',hasil_prediction=hasil,url_prediction=data['imageURL'],prediction_probas=probas)
+                    probas = [str(round(hasil[i].max()*100,2)) for i in range(4,8)]
+                    return render_template('result.html',hasil_prediction=hasil,
+                    url_prediction=data['imageURL'],prediction_probas=probas,
+                    proba_plots=get_proba_plots(hasil))
             else:
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-                hasil = predict_by_url(model,filename)
+                file_path = os.path.join(app.config["UPLOAD_FOLDER"],filename)
+                image_pil = Image.open(image)
+                image_pil.save(file_path)
+                hasil = predict_by_url(model,image)
                 if not hasil:
                     return render_template('prediction.html',imageInfo='Image not found or filetype not supported.')
                 else:            
-                    probas = [str(round(hasil[i],2)) for i in range(4,8)]
-                    print(probas)  
-                    return render_template('result.html',hasil_prediction=hasil,url_prediction=url_for('static', filename=filename),prediction_probas=probas)
+                    probas = [str(round(hasil[i].max()*100,2)) for i in range(4,8)]
+                    return render_template('result.html',hasil_prediction=hasil,
+                    url_prediction=url_for('static', filename=filename),prediction_probas=probas,
+                    proba_plots=get_proba_plots(hasil))
         
     return render_template('prediction.html')
 
@@ -54,9 +67,14 @@ def prediction():
 def about():
     return render_template('about.html')
     
+
 @app.route('/dataset')
 def dataset():
-    return render_template('dataset.html')
+    newdf = df.sample(100)
+    plots=get_bar_plots()
+    return render_template('dataset.html', df=newdf,
+    plot_master=plots[0], plot_sub=plots[1],
+    plot_art=plots[2], plot_gen=plots[3])
 
 if __name__ == '__main__':
-    app.run(debug=True,port=1122)
+    app.run(debug=True,port=1123)

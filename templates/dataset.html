@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="scrollable_big">
+    <div class="container pt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 white-box">
+                <h3>Let's take a look into the Dataset</h3>
+                <p style="margin-bottom: 20px;">This is the database used for Training and Testing our model. Well, not all of it.
+                The total data is 44424 and here only a sample of 100 data.</p>
+                <div class="scrollable_small">
+                    <table class="table table-bordered" style="font-size: 12px;">
+                        <thead>
+                            <tr>
+                                {% for i in df.columns: %}
+                                    <th>{{i}}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        {% for i,row in df.iterrows(): %}
+                        <tbody>
+                            <tr>
+                                {% for j in df.columns: %}
+                                    <td>{{row[j]}}</td>
+                                {% endfor %}
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+                <p style="margin-top: 20px;">But we do not need all this data. Since we are classifying categories from images.
+                    We only need the first four columns of the data, after 'id' ofcourse.</p>
+                <h3>Data Visualization</h3>
+                <p style="margin-bottom: 30px;">After preprocessing the data, we come up with 22000+ remaining data. Here are the spread for each category.</p>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Master Category</h5>
+                        <div class="chart mt-0" id="bar_type1">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Sub Category</h5>
+                        <div class="chart mt-0" id="bar_type2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Article Type</h5>
+                        <div class="chart mt-0" id="bar_type3">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Gender</h5>
+                        <div class="chart mt-0" id="bar_type4">
+                        </div>
+                    </div>
+                </div>
+                <form action="/">
+                    <button type="submit" class="btn btn-primary mt-6">Back</button>
+                </form>
+                <script>
+                    var bar_type1 = {{plot_master | safe}}
+                    var bar_type2 = {{plot_sub | safe}}
+                    var bar_type3 = {{plot_art | safe}}
+                    var bar_type4 = {{plot_gen | safe}}
+            
+                    Plotly.plot('bar_type1',bar_type1,{})
+                    Plotly.plot('bar_type2',bar_type2,{})
+                    Plotly.plot('bar_type3',bar_type3,{})
+                    Plotly.plot('bar_type4',bar_type4,{})
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,58 +1,93 @@
 {% extends 'layout.html' %}
 <html>
     <head>
-
     </head>
     <body>
         <!-- {% block title %}Upload Image{% endblock %} -->
         {% block body %}
-        <div class="container pt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8 white-box">
+        <div class="container-fluid pt-5">
+            <div class="row">
+                <div class="col-3 justify-content-left">
+                </div>
+                <div class="col-6 justify-content-center white-box">
                     <form action="/">
                         <div class="row">
-                            <div class="col-6 justify-content-center">
-                                <img src="{{url_prediction}}" width="300px" style="align-content: center;">
+                            <div class="col-6" id="imgInfo">
+                                <img src="{{url_prediction}}" width="300px" style="align-content: left;">
                             </div>
                             <div class="col-6">
-                                <h3 style="text-align:center;">Prediction Result</h3>
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Prediction</th>
-                                        <th scope="col">Confidence</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Master Category</td>
-                                        <td>{{hasil_prediction[0]}}</td>
-                                        <td>{{prediction_probas[0] + '%'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sub Category</td>
-                                        <td>{{hasil_prediction[1]}}</td>
-                                        <td>{{prediction_probas[1] + '%'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Article Type</td>
-                                        <td>{{hasil_prediction[2]}}</td>
-                                        <td>{{prediction_probas[2] + '%'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td>{{hasil_prediction[3]}}</td>
-                                        <td>{{prediction_probas[3] + '%'}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <div id="predInfo">
+                                    <h3 style="text-align:center; margin-bottom: 20pt;">Prediction Result</h3>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Prediction</th>
+                                            <th scope="col">Probability</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Master Category</td>
+                                            <td>{{hasil_prediction[0]}}</td>
+                                            <td id="p1">{{prediction_probas[0] + '%'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sub Category</td>
+                                            <td>{{hasil_prediction[1]}}</td>
+                                            <td id="p2">{{prediction_probas[1] + '%'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Article Type</td>
+                                            <td>{{hasil_prediction[2]}}</td>
+                                            <td id="p3">{{prediction_probas[2] + '%'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender</td>
+                                            <td>{{hasil_prediction[3]}}</td>
+                                            <td id="p4">{{prediction_probas[3] + '%'}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="ex3" id="moreInfo" style="display: none;">
+                                    <h4 style="text-align: center;">Probability Details</h4>
+                                    <img src="data:image/png;base64, {{ proba_plots[0] }}" width="650px">
+                                    <img src="data:image/png;base64, {{ proba_plots[1] }}" width="650px">
+                                    <img src="data:image/png;base64, {{ proba_plots[2] }}" width="650px">
+                                    <img src="data:image/png;base64, {{ proba_plots[3] }}" width="650px">
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4">Back</button>
+                                <button type="button" onclick="toggleMenu()" id="moreBtn" class="btn btn-outline-info mt-4" style="float: right;">More Info</button>
                             </div>
-                        </div>                    
-                        <button type="submit" class="btn btn-primary mt-4">Back</button>
+                        </div>
                     </form>
                 </div>
-            </div>
+            </div> 
+            <script>
+                function toggleMenu() {
+                    var x = document.getElementById("moreInfo");
+                        if (x.style.display === "none") {
+                            document.getElementById("moreBtn").innerHTML="Hide Info";
+                            x.style.display = "block";
+                        } else {
+                            document.getElementById("moreBtn").innerHTML="More Info";
+                            x.style.display = "none";
+                    }
+                    var x = document.getElementById("predInfo");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                    }
+                    var x = document.getElementById("imgInfo");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                    }
+                }
+            </script>
         </div>
         {% endblock body %}
     </body>

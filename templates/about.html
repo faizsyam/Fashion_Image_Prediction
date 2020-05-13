@@ -1,5 +1,48 @@
 {% extends 'layout.html' %}
+<html>
+    <head>
 
-{% block body %}
-    <h1>Our prediction for property price in Kuala Lumpur, Malaysia</h1>
-{% endblock body %}
+    </head>
+    <body>
+        {% block title %}Upload Image{% endblock %}
+        {% block body %}
+        <div class="container pt-5">
+            <div class="row justify-content-center">
+                <div class="col-2 mt-3" >
+                </div>
+                <div class="col-6 mt-5 white-box">
+                    <h3 style="margin-bottom: 20px;">About</h3>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold;">Author:</td>
+                                <td>Faizuddarain Syam</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Email:</td>
+                                <td><a href="mailto:faizsyam96@gmail.com">faizsyam96@gmail.com</a></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Github:</td>
+                                <td><a href="https://github.com/faizsyam">github.com/faizsyam</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="font-weight: bold;">Dataset Source:</td>
+                                <td><a href="https://www.kaggle.com/paramaggarwal/fashion-product-images-dataset">
+                                kaggle.com/paramaggarwal/fashion-product-images-dataset</a></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <form action="/" style="margin-top: 50px;">
+                        <button type="submit" class="btn btn-primary mt-6">Back</button>
+                    </form>
+                </div>
+                <div class="col-2 mt-3">
+                </div>
+            </div>
+        </div>
+        {% endblock body %}
+    </body>
+</html>
