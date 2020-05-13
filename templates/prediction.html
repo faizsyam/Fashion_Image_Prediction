@@ -8,23 +8,40 @@
         {% block body %}
         <div class="container pt-5">
             <div class="row justify-content-center">
-                <div class="col-md-6 mt-3">
-                    <h3>Fashion Products Image Prediction</h3>
+                <div class="col-3 mt-3" >
+                </div>
+                <div class="col-5 mt-5 white-box">
+                    <h3 style="text-align: left; font-size: xx-large; line-height: 25pt; margin-bottom: 30pt;">Fashion Products Image Classification</h3>
 
                     <form action="/" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="imageURL">Enter URL</label>
-                            <input type="text" name="imageURL" class="form-control" id="imageURL" placeholder="Enter URL">
+                            <input type="text" class="form-control" name="imageURL" id="imageURL" placeholder="Enter URL">
                         </div>
                         <div class="form-group">
-                            <label>Select image</label>
+                            <p style="margin-left: 10px;"><i>Or..</i></p>
+                            <label>Select From File</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="image" id="image">
-                                <label class="custom-file-label" for="image">Select image..</label>
+                                <input type="file" class="custom-file-input" name="imageBrowse" id="imageBrowse">
+                                <label class="custom-file-label" for="imageBrowse">Select image..</label>
                             </div>
+                            <div class="text-info" style="font-size: small;" id="file-upload-filename"></div>
                         </div>
+                        <script type="application/javascript">
+                            var input = document.getElementById( 'imageBrowse' );
+                            var infoArea = document.getElementById( 'file-upload-filename' );
+                            input.addEventListener( 'change', showFileName );
+                            function showFileName( event ) {                
+                                var input = event.srcElement;
+                                var fileName = input.files[0].name;
+                                infoArea.textContent = 'Selected File: ' + fileName;
+                            }
+                        </script>
+                        <p style="color:red" style="font-size:10px">{{ imageInfo }} </p>
                         <button type="submit" class="btn btn-primary mt-4">Predict!</button>
                     </form>
+                </div>
+                <div class="col-3 mt-3">
                 </div>
             </div>
         </div>

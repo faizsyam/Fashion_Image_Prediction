@@ -50,8 +50,6 @@ def plot_figures(figures, nrows = 1, ncols=1,figsize=(8, 8)):
         axeslist.ravel()[ind].set_title(title)
         axeslist.ravel()[ind].set_axis_off()
     plt.tight_layout() # optional
-    
-
 
 def load_image_url(url, resized_fac = 0.5):
     # download the image, convert it to a NumPy array, and then read
@@ -78,21 +76,25 @@ def get_embedding_url(model, url):
     return model.predict(x).reshape(-1)
 
 def loadImage(URL):
+    s = "/" + URL
     try:
-        with urllib.request.urlopen(URL) as url:
-            img = image.load_img(BytesIO(url.read()), target_size=(img_width, img_height))
-            return image.img_to_array(img)
+        try:
+            img = image.load_img(s, target_size=(img_width, img_height))
+        except:
+            with urllib.request.urlopen(URL) as url:
+                img = image.load_img(BytesIO(url.read()), target_size=(img_width, img_height))
+        return image.img_to_array(img)
     except:
-        print('HTTP Error 403: Forbidden')
+        print('HTTP Error 403: Forbidden : '+ s)
         return False
 
 def predict_by_url(model, url):
     
-    # try:
-    emb = get_embedding_url(model, url)
-    emb = pd.DataFrame(emb).transpose()
-    # except:
-        # return False
+    try:
+        emb = get_embedding_url(model, url)
+        emb = pd.DataFrame(emb).transpose()
+    except:
+        return False
 
     # Predict Master Category
     feature_pca = pca_masterCategory_n20.transform(emb)
@@ -164,4 +166,5 @@ def predict_by_url(model, url):
     pred_gen = model_gender.predict(dfPCA)[0]
     proba_gen = model_gender.predict_proba(dfPCA).max()*100
     
-    return pred_master, pred_sub, pred_art, pred_gen
+    return pred_master, pred_sub, pred_art, pred_gen, proba_master, proba_sub, proba_art, proba_gen
+

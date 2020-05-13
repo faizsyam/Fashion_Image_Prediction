@@ -1,4 +1,60 @@
 {% extends 'layout.html' %}
-{% block body %}
-    <h1>Prediction Result : {{hasil_prediction}}</h1>
-{% endblock body %}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <!-- {% block title %}Upload Image{% endblock %} -->
+        {% block body %}
+        <div class="container pt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 white-box">
+                    <form action="/">
+                        <div class="row">
+                            <div class="col-6 justify-content-center">
+                                <img src="{{url_prediction}}" width="300px" style="align-content: center;">
+                            </div>
+                            <div class="col-6">
+                                <h3 style="text-align:center;">Prediction Result</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Prediction</th>
+                                        <th scope="col">Confidence</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Master Category</td>
+                                        <td>{{hasil_prediction[0]}}</td>
+                                        <td>{{prediction_probas[0] + '%'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sub Category</td>
+                                        <td>{{hasil_prediction[1]}}</td>
+                                        <td>{{prediction_probas[1] + '%'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Article Type</td>
+                                        <td>{{hasil_prediction[2]}}</td>
+                                        <td>{{prediction_probas[2] + '%'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td>{{hasil_prediction[3]}}</td>
+                                        <td>{{prediction_probas[3] + '%'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                    
+                        <button type="submit" class="btn btn-primary mt-4">Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endblock body %}
+    </body>
+</html>
+
