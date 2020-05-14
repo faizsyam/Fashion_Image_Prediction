@@ -3,6 +3,7 @@ import urllib.request
 from io import BytesIO
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
 import numpy as np 
 import pandas as pd 
 import seaborn as sns
@@ -14,6 +15,10 @@ from keras.preprocessing import image
 from keras.applications.resnet50 import preprocess_input
 from keras.models import model_from_json
 import cv2
+
+# prevent gui crash
+import matplotlib
+matplotlib.use('Agg')
 
 model_masterCategory = pickle.load(open('model_masterCategory_final_hyper.sav','rb'))
 model_subCategory = pickle.load(open('model_subCategory_final_hyper.sav','rb'))

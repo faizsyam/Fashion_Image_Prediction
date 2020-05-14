@@ -3,7 +3,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 # from flask_dropzone import Dropzone
 from prediction import predict_by_url, init, show_proba_plot, df
-from plot import get_bar_plots
+from plot import get_bar_plots, scatter_cat, dfPCA
 from werkzeug import secure_filename
 import pandas as pd
 import os
@@ -70,11 +70,19 @@ def about():
 
 @app.route('/dataset')
 def dataset():
-    newdf = df.sample(100)
+    newdf = df.sample(200,random_state=101)
+
+    scat_master=scatter_cat('masterCategory',newdf)
+    scat_sub=scatter_cat('subCategory',newdf)
+    scat_art=scatter_cat('articleType',newdf)
+    scat_gender=scatter_cat('gender',newdf)
+
     plots=get_bar_plots()
     return render_template('dataset.html', df=newdf,
     plot_master=plots[0], plot_sub=plots[1],
-    plot_art=plots[2], plot_gen=plots[3])
+    plot_art=plots[2], plot_gen=plots[3],
+    scat_master=scat_master,scat_sub=scat_sub,
+    scat_art=scat_art,scat_gender=scat_gender)
 
 if __name__ == '__main__':
     app.run(debug=True,port=1123)

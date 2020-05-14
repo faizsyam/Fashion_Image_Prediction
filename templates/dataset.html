@@ -7,7 +7,7 @@
             <div class="col-lg-12 white-box">
                 <h3>Let's take a look into the Dataset</h3>
                 <p style="margin-bottom: 20px;">This is the database used for Training and Testing our model. Well, not all of it.
-                The total data is 44424 and here only a sample of 100 data.</p>
+                The total data is 44424 and here only a sample of 200 data.</p>
                 <div class="scrollable_small">
                     <table class="table table-bordered" style="font-size: 12px;">
                         <thead>
@@ -56,6 +56,33 @@
                         </div>
                     </div>
                 </div>
+                <p style="margin-bottom: 30px;">What about the image type data? The data after converted into arrays of number is huge.
+                But we can reduce them into a single two-dimensional data using PCA with n-components=2. By plotting PCA1 as x axis and PCA2 as y axis,
+                we can visualize how the data spread for each categories.</p>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Master Category</h5>
+                        <div class="chart mt-0" id="scat_type1">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Sub Category</h5>
+                        <div class="chart mt-0" id="scat_type2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Article Type</h5>
+                        <div class="chart mt-0" id="scat_type3">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5 style="text-align: center;">Gender</h5>
+                        <div class="chart mt-0" id="scat_type4">
+                        </div>
+                    </div>
+                </div>
                 <form action="/">
                     <button type="submit" class="btn btn-primary mt-6">Back</button>
                 </form>
@@ -69,6 +96,16 @@
                     Plotly.plot('bar_type2',bar_type2,{})
                     Plotly.plot('bar_type3',bar_type3,{})
                     Plotly.plot('bar_type4',bar_type4,{})
+
+                    var scat_type1 = {{scat_master | safe}}
+                    var scat_type2 = {{scat_sub | safe}}
+                    var scat_type3 = {{scat_art | safe}}
+                    var scat_type4 = {{scat_gender | safe}}
+
+                    Plotly.plot('scat_type1',scat_type1,{})
+                    Plotly.plot('scat_type2',scat_type2,{})
+                    Plotly.plot('scat_type3',scat_type3,{})
+                    Plotly.plot('scat_type4',scat_type4,{})
                 </script>
             </div>
         </div>
